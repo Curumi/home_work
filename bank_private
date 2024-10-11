@@ -1,0 +1,40 @@
+class BankAccount:
+    def init(self, balance):
+    self._balance = balance # приватная переменная
+  
+def deposit(self, amount):
+    if amount > 0:
+    self.__balance += amount
+  
+def withdraw(self, amount):
+    if amount <= self._balance:
+        self._balance -= amount
+    else:
+        print("Недостаточно средств")
+def get_balance(self):
+    return self.___balance
+    
+account = BankAccount (1000)
+account.deposit (500)
+print(account.get_balance())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Класс BankAccount представляет собой модель банковского счёта с тайным полем balance. Оно защищает баланс от неправильного изменения.
+#У класса есть три метода:
+#deposit(amount) — добавляет деньги на счёт.
+#withdraw(amount) — снимает деньги, если их достаточно.
+#get_balance() — возвращает текущий баланс
+#Поле balance защищает данные от неправильного изменения. Контроль осуществляется через методы.
