@@ -40,10 +40,21 @@ class Tank:
             self.__y = 0
         self.__create()
         self.right()
+
     def fire(self):
         if self.__ammo > 0:
             self.__ammo -= 1
             print('стреляю')
+
+    def _check_out_of_world(self):
+        if self.__hitbox.left < 0 or \
+            self.__hitbox.top < 0 or \
+            self.__hitbox.right >= world.WIDTH or \
+            self.__hitbox.bottom >= world.HEIGHT:
+            self.__undo_move()
+        if self.__bot:
+            self.__AI_change_orientation()
+
 
     def set_target(self, target):
         self.__target = target
@@ -104,7 +115,7 @@ class Tank:
 
 
     def update(self):
-        if self.__fuel > self.__speed:
+        if self.__fuel >= self.__speed:
             if self.__bot:
                 self.__AI()
 
@@ -114,6 +125,7 @@ class Tank:
             self.__y += self.__dy
             self.__fuel -= self.__speed
             self.__update_hitbox()
+            self.__check_out_of_world()
             self.__repaint()
 
     def __create(self):
