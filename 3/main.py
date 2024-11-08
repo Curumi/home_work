@@ -1,14 +1,13 @@
 from tank import Tank
-from tkinter import*
-
+from tkinter import *
+import world
 KEY_W = 87
 KEY_S = 83
 KEY_A = 65
 KEY_D = 68
 
-
-
 FPS = 60
+
 def update():
     player.update()
     enemy.update()
@@ -16,13 +15,8 @@ def update():
     w.after(1000 // FPS, update)
 
 def check_collision():
-    if player.intersects(enemy):
-        print('Столкнулись')
-        player.undo_move()
-
-    if enemy.intersects(player):
-        print('Столкнулись')
-        enemy.undo_move()
+    player.intersects(enemy)
+    enemy.intersects(player)
 
 def key_press(event):
     if event.keycode == KEY_W:
@@ -34,19 +28,18 @@ def key_press(event):
     if event.keycode == KEY_D:
         player.right()
     check_collision()
+
 w = Tk()
-w.title('Танки')
-canv = Canvas(w, width = 800, height = 600, bg = 'alice blue')
+w.title('')
+canv = Canvas(w, width=world.WIDTH, height=world.HEIGHT, bg='alice blue')
+canv = Canvas(w, width=800, height=600, bg='alice blue')
 canv.pack()
 
-player = Tank(canvas=canv,x=100,y=50,ammo=100,speed = 1, bot=False)
+player = Tank(canvas=canv, x=100, y=50, ammo=100, speed=1,bot = False)
 
-enemy = Tank(canvas=canv,x=300,y=300,ammo=100, bot=True)
+enemy = Tank(canvas=canv, x=300, y=300, ammo=100, speed=1,bot = True)
 
 enemy.set_target(player)
-
-
-
 
 w.bind('<KeyPress>', key_press)
 update()
