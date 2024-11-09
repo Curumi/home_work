@@ -66,7 +66,7 @@ class Tank:
                 self.right()
         else:
             if self.__target.get_y() < self.get_y():
-                self.forvard()
+                self.forward()
             else:
                 self.backward()
 
@@ -78,7 +78,7 @@ class Tank:
         if rand == 1:
             self.right()
         if rand == 2:
-            self.forvard()
+            self.forward()
         if rand == 3:
             self.backward()
 
@@ -87,7 +87,7 @@ class Tank:
             self.__ammo -= 1
             print('стреляю')
 
-    def forvard(self):
+    def forward(self):
         self.__vx = 0
         self.__vy = -1
         self.__canvas.itemconfig(self.__id, image=self.__skin_up)
@@ -127,7 +127,11 @@ class Tank:
         self.__id = self.__canvas.create_image(self.__x, self.__y, image=self.__skin_up, anchor=NW)
 
     def __repaint(self):
-        self.__canvas.moveto(self.__id, x=self.__x, y=self.__y)
+        self.__canvas.moveto(self.__id, x= world.get_screen_x(self.__x), y=world.get_screen_y(self.__y))
+
+    def stop(self):
+        self.__vx = 0
+        self.__vy = 0
 
     def __update_hitbox(self):
         self.__hitbox.moveto(self.__x, self.__y)
