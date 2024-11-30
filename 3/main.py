@@ -9,6 +9,7 @@ KEY_S = 83
 KEY_A = 65
 KEY_D = 68
 
+
 FPS = 60
 
 def update():
@@ -48,6 +49,9 @@ def load_textures():
     texture.load('down','../img/down.png')
     texture.load('right', '../img/right.png')
     texture.load('left', '../img/left.png')
+    texture.load(world.BRICK, '../img/brick.png')
+    texture.load(world.WATER, '../img/water.png')
+    texture.load(world.CONCRETE, '../img/wall.png')
     print(texture._frames)
 
 
@@ -62,8 +66,9 @@ canv = Canvas(w, width=world.SCREEN_WIDTH, height=world.SCREEN_HEIGHT, bg='alice
 canv.pack()
 
 
-
+world.initialize(canv)
 tanks_collection.initialize(canv)
+
 w.bind('<KeyPress>', key_press)
 
 
