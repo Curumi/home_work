@@ -1,8 +1,9 @@
-from tkinter import *
+# 1 создадим модуль, который будет управлять всеми изображениями
+from tkinter import PhotoImage
 
 _frames = {}
+def load(name, file_name):    # вызывать эту фукцию будем в модуле main
 
-def load(name, file_name):
     image = PhotoImage(file=file_name)
     _frames[name] = image
 
