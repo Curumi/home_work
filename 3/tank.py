@@ -42,10 +42,13 @@ class Tank:
 
     def __check_map_collision(self):
         details = {}
+        self.__set_usual_speed()
         result = self.__hitbox.check_map_collision(details)
         if result:
-            if details['block'] == world.WATER:
-                pass
+            if world.WATER in details and len(details) == 1:
+            # if details['block'] == world.WATER:
+            #     pass
+                self.__set_water_speed()
             else:
                 self.__undo_move()
                 if self.__bot:
