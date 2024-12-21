@@ -45,11 +45,21 @@ def create_map(rows = 20, cols  =20):
             row.append(cell)
         _map.append(row)
 
-def update_map():
+def update_map(all=False):
     first_row = get_row(_camera_y)
     last_row = get_row(_camera_y + SCREEN_HEIGHT - 1)
     first_col = get_col(_camera_x)
     last_col = get_col(_camera_x + SCREEN_WIDTH - 1)
+
+    if all:
+        first_row = 0
+        first_col = 0
+        last_row = get_rows() - 1
+        last_col = get_cols() - 1
+
+    for i in range(first_row, last_row + 1):
+        for j in range(first_col, last_col + 1):
+            update_cell(i, j)
     
 
     
