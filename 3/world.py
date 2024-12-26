@@ -1,3 +1,4 @@
+from pygame.display import update
 import texture
 from tkinter import NW
 from random import randint, choice
@@ -14,14 +15,27 @@ BLOCK_SIZE = 64
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
-'''
-WIDTH = SCREEN_WIDTH * 6
-HEIGHT = SCREEN_HEIGHT * 4
-'''
+
 _canvas = None
 _map = []
 
 AIR = 'a'
+
+def load_map(file_name):
+    global _map
+
+    _map = []
+
+    with open(file_name) as f:
+        i = 0
+        for line in f:
+            blocks = line.strip().replace('\t','')
+            row = []
+            for j in range(len(blocks)):
+                cell = _Cell(_canvas,blocks[j],j * BLOCK_SIZE, i * BLOCK_SIZE)
+                row.append(cell)
+            _map.append(row)
+            i += 1
 
 def get_block(row, col):
     if row < 0 or col < 0 or row >= get_rows() \
@@ -90,9 +104,12 @@ def get_height():
     return get_rows() * BLOCK_SIZE
 
 def initialize(canv):
-    global _canvas,_map
+    global _canvas
     _canvas = canv
-    create_map(20,20)
+    create_map(25, 25)
+    load_map('../map/1.tmap')
+    load_map('../map/2.tmap')
+    load_map('../map/3.tmap')
 
 def set_camera_xy(x, y):
     global _camera_x, _camera_y
@@ -107,8 +124,16 @@ def set_camera_xy(x, y):
     if y > get_height() - SCREEN_HEIGHT:
         y = get_height() - SCREEN_HEIGHT
 
+    update_all = False
+    if abs(_camera_x - x) >= BLOCK_SIZE or abs(_camera_y - y) >= BLOCK_SIZE:
+        update_all = True
+
+
     _camera_x = x
     _camera_y = y
+
+    if update_all:
+        update_map(all)
 
 def move_camera(delta_x, delta_y):
     set_camera_xy(_camera_x + delta_x, _camera_y + delta_y)

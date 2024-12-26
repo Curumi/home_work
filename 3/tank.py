@@ -78,7 +78,7 @@ class Tank:
                 self.right()
         else:
             if self.__target.get_y() < self.get_y():
-                self.forvard()
+                self.forward()
             else:
                 self.backward()
 
@@ -94,7 +94,7 @@ class Tank:
         if rand == 0:
             self.left()
         if rand == 1:
-            self.forvard()
+            self.forward()
         if rand == 2:
             self.right()
         if rand == 3:
@@ -105,7 +105,7 @@ class Tank:
             self.__ammo -= 1
             print('стреляю')
 
-    def forvard(self):
+    def forward(self):
         self.__vx = 0
         self.__vy = -1
         self.__canvas.itemconfig(self.__id,

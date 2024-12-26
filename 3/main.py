@@ -28,7 +28,7 @@ def update():
 def key_press(event):
     player = tank_collection.get_player()
     if event.keycode == KEY_W:
-        player.forvard()
+        player.forward()
     elif event.keycode == KEY_S:
         player.backward()
     elif event.keycode == KEY_A:
@@ -44,19 +44,18 @@ def key_press(event):
     elif event.keycode == KEY_RIGHT:
         world.move_camera(5, 0)
 
-    elif event.keycode == 32:
-        tank_collection.spawn_enemy()
+
 
 def load_textures():
     # pass
     texture.load('tank_up',
-                 '../img/tank_up.png')
+                 '../img/up.png')
     texture.load('tank_down',
-                 '../img/tank_down.png')
+                 '../img/down.png')
     texture.load('tank_left',
-                 '../img/tank_left.png')
+                 '../img/left.png')
     texture.load('tank_right',
-                 '../img/tank_right.png')
+                 '../img/right.png')
     texture.load(world.BRICK,'../img/brick.png')
     texture.load(world.WATER, '../img/water.png')
     texture.load(world.CONCRETE,'../img/wall.png' )
