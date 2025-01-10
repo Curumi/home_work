@@ -1,19 +1,21 @@
+
+
 from hitbox import Hitbox
 from tkinter import *
 from random import randint
 import world
-
 import texture as skin
+
+
 
 class Tank:
     __count = 0
 
-    def __init__(self, canvas, x, y, model='Т-14 Армата',
-                 ammo=100, speed=10, bot=True):
+    def __init__(self, canvas, x, y,model = 'Т-14 Армата', ammo = 100, speed = 10, bot = True):
         self.__bot = bot
         self.__target = None
         Tank.__count += 1
-        self.__hitbox = Hitbox(x, y, self.get_size(), self.get_size(), padding=0)
+        self.__hitbox = Hitbox(x, y, self.get_size(), self.get_size(), padding=3)
         self.__canvas = canvas
         self.__model = model
         self.__hp = 100
@@ -31,40 +33,44 @@ class Tank:
             self.__x = 0
         if self.__y < 0:
             self.__y = 0
-
-        self.__usual_speed =speed
-        self.__water_speed =speed/2
-
+        self.__usual_speed = speed
+        self.__water_speed = speed / 2
         self.__create()
         self.right()
 
         print(self)
 
-    def __check_map_collision(self):
-        details = {}
-        self.__set_usual_speed()
-        result = self.__hitbox.check_map_collision(details)
-        if result:
-            if world.WATER in details and len(details) == 1:
-            # if details['block'] == world.WATER:
-            #     pass
-                self.__set_water_speed()
-            else:
-                self.__undo_move()
-                if self.__bot:
-                    self.__AI_change_orientation()
-
-
-
-
-
-
+    def __take_ammo(self):
+        self.__ammo += 10
+        if self.__ammo > 100:
+            self.__ammo = 100
 
     def __set_usual_speed(self):
         self.__speed = self.__usual_speed
 
     def __set_water_speed(self):
         self.__speed = self.__water_speed
+
+
+    def __check_map_collision(self):
+        details = {}
+        self.__set_usual_speed()
+        result = self.__hitbox.check_map_collision(details)
+        if result:
+            self._on_map_collision(details)
+
+
+    def _on_map_collision(self, details):
+        if world.WATER in details and len(details) == 1:
+            self.__set_water_speed()
+        elif world.MISSLE in details:
+            pos = details[world.MISSLE]
+            if world.take(pos['row'], pos['col']) != world.AIR:
+                self.__take_ammo()
+        else:
+            self.__undo_move()
+            if self.__bot:
+                self.__AI_change_orientation()
 
 
     def set_target(self, target):
@@ -108,26 +114,22 @@ class Tank:
     def forward(self):
         self.__vx = 0
         self.__vy = -1
-        self.__canvas.itemconfig(self.__id,
-                                 image = skin.get('tank_up'))
+        self.__canvas.itemconfig(self.__id, image = skin.get('tank_up'))
 
     def backward(self):
         self.__vx = 0
         self.__vy = 1
-        self.__canvas.itemconfig(self.__id,
-                                 image = skin.get('tank_down'))
+        self.__canvas.itemconfig(self.__id, image = skin.get('tank_down'))
 
     def left(self):
         self.__vx = -1
         self.__vy = 0
-        self.__canvas.itemconfig(self.__id,
-                                 image = skin.get('tank_left'))
+        self.__canvas.itemconfig(self.__id, image = skin.get('tank_left'))
 
     def right(self):
         self.__vx = 1
         self.__vy = 0
-        self.__canvas.itemconfig(self.__id,
-                                 image = skin.get('tank_right'))
+        self.__canvas.itemconfig(self.__id, image = skin.get('tank_right'))
 
     def stop(self):
         self.__vx = 0
@@ -144,11 +146,11 @@ class Tank:
             self.__x += self.__dx
             self.__y += self.__dy
             self.__fuel -=self.__speed
-
             self.__update_hitbox()
             self.__chek_out_of_world()
             self.__check_map_collision()
             self.__repaint()
+
 
     def __undo_move(self):
         if self.__dx == 0 and self.__dy == 0:
@@ -208,15 +210,13 @@ class Tank:
     def grt_quantity():
         return Tank.__count
 
-# 9 Получить размеры изображения через skin
     def get_size(self):
-        # return self.__skin_up.width()
         return skin.get('tank_up').width()
 
     def __chek_out_of_world(self):
         if self.__hitbox.left < 0 or \
                 self.__hitbox.top < 0 or \
-                self.__hitbox.right >= world.get_widht() or \
+                self.__hitbox.right >= world.get_width() or \
                 self.__hitbox.bottom >= world.get_height():
             self.__undo_move()
             if self.__bot:
