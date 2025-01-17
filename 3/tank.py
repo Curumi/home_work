@@ -1,5 +1,3 @@
-
-
 from hitbox import Hitbox
 from tkinter import *
 from random import randint
