@@ -56,11 +56,17 @@ def load_textures():
     texture.load('tank_left', '../img/tank_left.png')
     texture.load('tank_right', '../img/tank_right.png')
 
+    texture.load('tank_up_player', '../img/img/tank_up_player.png')
+    texture.load('tank_down_player', '../img/img/tank_down_player.png')
+    texture.load('tank_left_player', '../img/img/tank_left_player.png')
+    texture.load('tank_right_player', '../img/img/tank_right_player.png')
+
     texture.load(world.BRICK, '../img/brick.png')
     texture.load(world.WATER, '../img/water.png')
     texture.load(world.CONCRETE, '../img/wall.png')
 
     texture.load(world.MISSLE, '../img/bonus.png')
+
 
 
 w = Tk()
