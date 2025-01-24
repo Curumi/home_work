@@ -125,5 +125,5 @@ if __name__ == "__main__":
 
 ### Автор
 
-[Ваше Имя](https://github.com/Curumi)
+[Curumi](https://github.com/Curumi)
 
