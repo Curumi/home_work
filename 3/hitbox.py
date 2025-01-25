@@ -10,6 +10,14 @@ class Hitbox:
         self.__set_height(height)
         self.__black_list = [world.CONCRETE, world.BRICK, world.WATER, world.MISSLE]
 
+    def set_blacklist(self, balcklist):
+        self.__black_list = balcklist
+
+
+
+
+
+
 
 
     def __get_corner_points(self):

@@ -12,7 +12,7 @@ def initialize(canv):
     _canvas = canv
 
     player = spawn(False)
-    enemy = spawn(True)._set_target(player)
+    enemy = spawn(True).set_target(player)
     spawn(True).set_target(player)
 
 def get_player():
@@ -27,7 +27,7 @@ def check_collision(tank):
     for other_tank in _tanks:
         if tank == other_tank:
             continue
-        if tank.intersects(other_tank):
+        if tank.intersect(other_tank):
             return True
     return False
 
