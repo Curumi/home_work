@@ -1,5 +1,5 @@
 from tkinter import NW
-from Missile_collections import check_missiles_collection
+from missiles_collection import check_missiles_collection
 from random import randint
 from units import Tank
 import world
@@ -34,7 +34,7 @@ def update():
     _update_screen()
     start = len(_tanks) - 1
     for i in range(start, -1, -1):
-        if _tanks[i].is_destroyed():
+        if _tanks[i].is_destroyed() and i != 0:
             del _tanks[i]
         else:
             _tanks[i].update()
@@ -48,7 +48,7 @@ def check_collision(tank):
     for other_tank in _tanks:
         if tank == other_tank:
             continue
-        if tank.intersect(other_tank):
+        if tank.intersects(other_tank):
             return True
     return False
 
